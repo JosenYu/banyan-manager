@@ -6,24 +6,48 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    icon: "el-icon-s-home",
     path: "/",
-    name: "home",
+    name: "主页",
     component: Home
   },
-  {
-    path: "/manager",
-    name: "manager",
-    component: () => import("@/views/Manager")
-  }
   // {
-  //   path: "/about",
-  //   name: "about",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/About.vue")
-  // }
+  //   icon: "el-icon-tickets",
+  //   path: "/detail",
+  //   name: "详情页",
+  //   component: () => import("@/views/Detail")
+  // },
+  {
+    icon: "el-icon-s-management",
+    path: "/commodity",
+    name: "商品",
+    component: () => import("@/views/CommodityState"),
+    children: [
+      {
+        path: "quantity",
+        name: "查询",
+        component: () => import("@/components/commodity/Quantity"),
+        show: true
+      },
+      {
+        path: "in",
+        name: "入库",
+        component: () => import("@/components/commodity/In"),
+        show: true
+      },
+      {
+        path: "out",
+        name: "出库",
+        component: () => import("@/components/commodity/Out"),
+        show: true
+      },
+      {
+        path: "detail",
+        name: "详情页",
+        component: () => import("@/components/commodity/Detail")
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({

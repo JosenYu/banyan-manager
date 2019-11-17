@@ -1,0 +1,4 @@
+/* 覆盖element-ui */
+.el-form-item__content {
+  /* width: 100%; */
+}

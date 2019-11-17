@@ -17,7 +17,9 @@ export default {
   components: {
     // HelloWorld
   },
-  data: () => ({}),
+  data() {
+    return {};
+  },
   mounted() {
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById("main"));
@@ -41,8 +43,7 @@ export default {
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
     // 定义窗口大小变更通知事件
-    window.onresize = function() {
-      console.log(1);
+    window.onresize = () => {
       myChart.resize();
     };
   }
