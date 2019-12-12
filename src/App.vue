@@ -33,12 +33,17 @@ html, body
       content ''
       display block
       clear both
+    .the-head-bar
+      position sticky
+      top 0
+      z-index 1
     .left
       position fixed
       height 100%
+      z-index 2
     .right
+      z-index 1
       transition-duration 1s
-      overflow hidden
       .view
         padding 10px
 .max-right

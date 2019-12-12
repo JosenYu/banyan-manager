@@ -70,11 +70,11 @@
           placeholder="选择日期"
         ></el-date-picker>
       </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" @click="submitForm">立即创建</el-button>
+      <!-- 修改 -->
+      <!-- <el-form-item>
+        <el-button type="primary" @click="submitForm">立即修改</el-button>
         <el-button @click="$router.go(-1)">取消</el-button>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
   </div>
 </template>
@@ -92,10 +92,11 @@ export default {
         model: "型号/规格",
         brand: "品牌",
         number: "数量",
-        unit: "单位/个",
+        unit: "单位/只",
         price: "单价/元",
         totalPrice: "总价格/元",
-        retail: "零售/元",
+        MSRP: "建议零售价",
+        TMSRP: "建议零售价总合",
         source: "来源",
         remarks: "备注",
         updatedAt: "更新时间",
