@@ -112,6 +112,7 @@ export default {
           });
           this.dialogVisible = false;
         }
+        this.getCommodity();
       });
     },
     // 打开出售框
