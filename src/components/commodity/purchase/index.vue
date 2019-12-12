@@ -59,13 +59,11 @@ export default {
         name: "商品名称",
         model: "型号/规格",
         brand: "品牌",
-        source: "来源",
         unit: "单位/只",
         number: "数量",
         price: "单价/元",
         totalPrice: "总价/元",
         MSRP: "建议零售/元",
-        TMSRP: "建议总零售/元",
         remarks: "备注",
         from: "来源"
       },
@@ -74,12 +72,11 @@ export default {
         name: "",
         model: "",
         brand: "",
-        unit: "",
+        unit: "只",
         number: 0,
         price: 0,
         totalPrice: 0,
         MSRP: 0,
-        TMSRP: 0,
         remarks: "",
         from: ""
       }
@@ -94,8 +91,6 @@ export default {
         if (result.status === 200) {
           this.$message.success("创建成功");
           this.$router.push("/commodity/quantity");
-        } else {
-          this.$message.error("网络出错了哦");
         }
       });
     },
@@ -150,6 +145,7 @@ export default {
             case "model":
             case "from":
             case "unit":
+            case "remarks":
               delete list[key];
               break;
             default:

@@ -2,7 +2,7 @@
   <!-- 库存查询 -->
   <div class="quantity">
     <TheSearch @search="search" />
-    <el-table :data="tableData" height="700">
+    <el-table :data="tableData" max-height="700">
       <el-table-column
         v-for="(item, key, index) in tableTitle"
         :key="index"
@@ -67,7 +67,6 @@ export default {
   methods: {
     // 改变当前页码
     changeCurrent(v) {
-      console.log("当前页码", v);
       this.getCommodity(
         this.searchForm.name,
         this.searchForm.model,
@@ -77,7 +76,6 @@ export default {
     },
     // 详情
     detail(scope) {
-      console.log("详情页", scope);
       this.$router.push({
         name: "详情页",
         params: scope.row
@@ -85,7 +83,6 @@ export default {
     },
     // 搜索按钮
     search(form) {
-      console.log("详情页", form);
       this.getCommodity(form.name, form.model, form.brand);
       this.searchForm = form;
     },
@@ -99,8 +96,8 @@ export default {
      */
     getCommodity(name, model, brand, pageCurrent) {
       getCommodity(name, model, brand, pageCurrent).then(result => {
-        this.tableData = result.data.list.documents;
-        this.total = result.data.list.totalCounts;
+        this.tableData = result.data.documents;
+        this.total = result.data.totalCounts;
       });
     }
   },

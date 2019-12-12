@@ -1,31 +1,33 @@
 import axios from "axios";
+import { Message } from "element-ui";
+
 const url = {
   development: "/",
-  production: ""
+  production: "//funjosen.fun:3000"
 };
 
-console.log("当前环境", process.env.NODE_ENV);
+// console.log("当前环境", process.env.NODE_ENV);
 const request = axios.create({
   baseURL: url[process.env.NODE_ENV]
 });
-export default request;
 
 //http request 拦截器
-axios.interceptors.request.use(
-  config => {
-    return config;
-  },
+request.interceptors.request.use(
+  config => config,
   error => {
     return Promise.reject(error);
   }
 );
 
 //http response 拦截器
-axios.interceptors.response.use(
+request.interceptors.response.use(
   response => {
     return response;
   },
   error => {
+    Message.error("错了哦，请求超时");
     return Promise.reject(error);
   }
 );
+
+export default request;

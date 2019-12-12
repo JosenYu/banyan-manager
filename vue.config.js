@@ -1,12 +1,6 @@
 module.exports = {
   devServer: {
-    // proxy: {
-    //   "/": {
-    //     target: "http://10.0.0.32：3000", //对应自己的接口
-    //     changeOrigin: true,
-    //     ws: true
-    //   }
-    // }
-    proxy: "http://10.0.0.32:3000" //对应自己的接口
+    // proxy: "http://10.0.0.32:3000" //对应自己的接口
+    proxy: "http://172.16.1.43:3000/" //对应自己的接口
   }
 };
