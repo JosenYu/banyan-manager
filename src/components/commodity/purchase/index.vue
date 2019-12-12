@@ -12,7 +12,6 @@
       >
         <el-input
           :placeholder="'请输入' + item"
-          clearable
           class="el-input"
           v-model="form[key]"
         ></el-input>
@@ -26,22 +25,11 @@
         :prop="key"
       >
         <el-input
+          :disabled="key === 'TMSRP' || key === 'totalPrice'"
           type="number"
           :placeholder="'请输入' + item"
-          clearable
           class="el-input"
           v-model.number="form[key]"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="总价格">
-        <el-input type="number" v-model="form.totalPrice" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="备注信息">
-        <el-input
-          type="textarea"
-          placeholder="请输入备注信息"
-          v-model="form.remarks"
-          show-word-limit
         ></el-input>
       </el-form-item>
       <el-form-item>
@@ -64,31 +52,36 @@ export default {
         number: { type: "number", message: "请输入数字" },
         price: { type: "number", message: "请输入数字" },
         totalPrice: { type: "number", message: "请输入数字" },
-        retail: { type: "number", message: "请输入数字" }
+        MSRP: { type: "number", message: "请输入数字" },
+        TMSRP: { type: "number", message: "请输入数字" }
       },
       title: {
         name: "商品名称",
         model: "型号/规格",
         brand: "品牌",
         source: "来源",
-        unit: "单位/个",
+        unit: "单位/只",
         number: "数量",
         price: "单价/元",
         totalPrice: "总价/元",
-        retail: "零售/元"
-        // remarks: "备注"
+        MSRP: "建议零售/元",
+        TMSRP: "建议总零售/元",
+        remarks: "备注",
+        from: "来源"
       },
+      // 提交的表单数据
       form: {
         name: "",
         model: "",
         brand: "",
         unit: "",
-        source: "",
         number: 0,
         price: 0,
         totalPrice: 0,
-        retail: 0,
-        remarks: ""
+        MSRP: 0,
+        TMSRP: 0,
+        remarks: "",
+        from: ""
       }
     };
   },
@@ -114,7 +107,8 @@ export default {
             case "number":
             case "price":
             case "totalPrice":
-            case "retail":
+            case "MSRP":
+            case "TMSRP":
               this.form[key] = 0;
               break;
             default:
@@ -132,10 +126,11 @@ export default {
         if (list.hasOwnProperty(key)) {
           switch (key) {
             case "name":
-            case "brand":
             case "model":
-            case "source":
+            case "brand":
             case "unit":
+            case "remarks":
+            case "from":
               break;
             default:
               delete list[key];
@@ -153,9 +148,8 @@ export default {
             case "name":
             case "brand":
             case "model":
-            case "source":
+            case "from":
             case "unit":
-            case "totalPrice":
               delete list[key];
               break;
             default:
@@ -170,14 +164,21 @@ export default {
     },
     price() {
       return this.form.price;
+    },
+    MSRP() {
+      return this.form.MSRP;
     }
   },
   watch: {
     number() {
       this.form.totalPrice = this.form.number * this.form.price;
+      this.form.TMSRP = this.form.number * this.form.MSRP;
     },
     price() {
       this.form.totalPrice = this.form.number * this.form.price;
+    },
+    MSRP() {
+      this.form.TMSRP = this.form.number * this.form.MSRP;
     }
   }
 };

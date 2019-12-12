@@ -4,13 +4,19 @@ module.exports = {
   name: "商品名称",
   model: "型号/规格",
   brand: "品牌",
-  unit: "单位/个",
+  unit: "单位/只",
   number: "数量",
   price: "单价/元",
   totalPrice: "总价格",
+  MSRP: "建议零售价",
+  TMSRP: "建议零售价总合",
   retail: "零售",
-  source: "来源",
+  totalRetail: "总零售",
+  from: "来源",
+  to: "出处",
   remarks: "备注",
   createdAt: "创建时间",
-  updatedAt: "更新时间"
+  updatedAt: "更新时间",
+  p_id: "采购 ID",
+  s_id: "出售 ID"
 };

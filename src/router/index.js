@@ -30,15 +30,15 @@ const routes = [
         show: true
       },
       {
-        path: "in",
-        name: "入库",
-        component: () => import("@/components/commodity/In"),
+        path: "purchase",
+        name: "采购",
+        component: () => import("@/components/commodity/purchase"),
         show: true
       },
       {
-        path: "out",
-        name: "出库",
-        component: () => import("@/components/commodity/Out"),
+        path: "sell",
+        name: "出售",
+        component: () => import("@/components/commodity/sell"),
         show: true
       },
       {

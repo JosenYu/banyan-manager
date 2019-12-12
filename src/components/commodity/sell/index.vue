@@ -19,8 +19,8 @@
       <el-table-column label="型号/规格" prop="model"></el-table-column>
       <el-table-column label="品牌" prop="brand"></el-table-column>
       <el-table-column label="单位" prop="unit"></el-table-column>
-      <el-table-column label="零售" prop="retail"></el-table-column>
       <el-table-column label="数量" prop="number"></el-table-column>
+      <el-table-column label="建议零售" prop="MSRP"></el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
           <div>
@@ -33,20 +33,18 @@
     <el-dialog class="dialog" title="出库提示" :visible.sync="dialogVisible">
       <div class="dialog__info">
         <!-- 信息 -->
-        <div v-for="(item, key, index) in outForm.commodity" :key="index">
+        <div v-for="(item, key, index) in commodity" :key="index">
           <span>{{ $t(key) }} :{{ item }}</span>
         </div>
         <!-- 选择数量 -->
         <div class="dialog__check-number">
-          <h3>出售数量 / {{ outForm.commodity.unit }}</h3>
+          <h3>出售数量</h3>
           <el-input-number v-model="outForm.number"></el-input-number>
-          <span class="check-number__max"
-            >最多{{ outForm.commodity.number }}</span
-          >
+          <span class="check-number__max">共: {{ outForm.number }}</span>
         </div>
         <!-- 售价 -->
         <div class="dialog___retail">
-          <h3>出售单价 / 元</h3>
+          <h3>出售单价</h3>
           <el-input-number v-model="outForm.retail"></el-input-number>
           <h3>￥ {{ totalRetail }} 元</h3>
         </div>
@@ -93,8 +91,9 @@ export default {
         "unit",
         "price",
         "totalPrice",
-        "retail",
-        "source",
+        "MSRP",
+        "TMSRP",
+        "from",
         "remarks",
         "updatedAt",
         "createdAt"
@@ -102,7 +101,9 @@ export default {
       tableData: [],
       searchForm: {},
       total: 1,
-      outForm: { commodity: {}, number: 0, retail: 0, totalRetail: 0 },
+      // 商品信息集合
+      commodity: {},
+      outForm: { ID: "", number: 1, retail: 0, totalRetail: 0 },
       dialogVisible: false
     };
   },
@@ -111,8 +112,10 @@ export default {
     submitOut() {
       this.outForm.commodity.number =
         this.outForm.commodity.number - this.outForm.number;
-      console.log(this.outForm.commodity);
-      updateCommodity(this.outForm.commodity).then(result => {
+      let form = {};
+      form = this.outForm;
+      console.log(form);
+      updateCommodity(form).then(result => {
         console.log(result);
         if (result.data.msg === "success") {
           this.dialogVisible = false;
@@ -120,7 +123,8 @@ export default {
       });
     },
     OpenOut({ row }) {
-      this.outForm.commodity = row;
+      this.commodity = row;
+      Object.assign(this.outForm, row);
       console.log(this.outForm);
       this.dialogVisible = true;
     },
@@ -163,8 +167,8 @@ export default {
   watch: {
     outForm: {
       handler(n) {
-        if (n.number >= n.commodity.number) {
-          n.number = n.commodity.number;
+        if (n.number >= this.commodity.number) {
+          n.number = this.commodity.number;
         }
         n.totalRetail = n.number * n.retail;
       },
