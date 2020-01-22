@@ -13,18 +13,6 @@
 
 <style lang="stylus">
 @import url('~@/style/element.css')
-/* 设置滚动条的样式 */
-::-webkit-scrollbar
-  width 8px
-  height 5px
-  background-color #ddd
-/* 滚动槽 */
-::-webkit-scrollbar-track
-  border-radius 10px
-/* 滚动条滑块 */
-::-webkit-scrollbar-thumb
-  border-radius 10px
-  background #aaa
 html, body
   margin 0
   min-width 1080px

@@ -1,14 +1,14 @@
 import axios from "axios";
 import { Message } from "element-ui";
 
-const url = {
+const baseURL = {
   development: "/",
   production: "//funjosen.fun:3000"
 };
 
 // console.log("当前环境", process.env.NODE_ENV);
 const request = axios.create({
-  baseURL: url[process.env.NODE_ENV]
+  baseURL: baseURL[process.env.NODE_ENV]
 });
 
 //http request 拦截器
