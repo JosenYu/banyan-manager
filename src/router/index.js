@@ -8,15 +8,9 @@ const routes = [
   {
     icon: "el-icon-s-home",
     path: "/",
-    name: "主页",
+    name: "首页",
     component: Home
   },
-  // {
-  //   icon: "el-icon-tickets",
-  //   path: "/detail",
-  //   name: "详情页",
-  //   component: () => import("@/views/Detail")
-  // },
   {
     icon: "el-icon-s-management",
     path: "/commodity",

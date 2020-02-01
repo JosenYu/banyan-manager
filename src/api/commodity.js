@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-export { getCommodity, createCommodity, updateCommodity };
+export { getCommodity, createCommodity, updateCommodity, aaa, aaa2 };
 //
 function getCommodity(
   name = "",
@@ -35,3 +35,17 @@ function updateCommodity(params) {
     data: params
   });
 }
+const aaa = data =>
+  request({
+    url: "/aaa",
+    method: "post",
+    data: data
+  });
+const aaa2 = name =>
+  request({
+    url: "/aaa2",
+    method: "PUT",
+    data: {
+      name: name
+    }
+  });

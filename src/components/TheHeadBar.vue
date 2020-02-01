@@ -2,10 +2,9 @@
   <div class="the-header-bar">
     <i class="el-icon-s-fold" @click="hide"></i>
     <el-breadcrumb separator="/" class="el-breadcrumb">
-      <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="(item, index) in title" :key="index">
+        {{ item }}
+      </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
@@ -21,6 +20,16 @@ export default {
     hide() {
       this.isHide = !this.isHide;
       this.$store.commit("changeNav", this.isHide);
+    }
+  },
+  computed: {
+    title() {
+      return this.$store.state.headBar;
+    }
+  },
+  watch: {
+    title(n, o) {
+      console.log(n, o);
     }
   }
 };

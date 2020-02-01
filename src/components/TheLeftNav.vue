@@ -2,17 +2,20 @@
   <nav class="the-left-nav" :class="{ 'hide-left-nav': isCollapse }">
     <el-menu
       router
+      default-active="首页"
       class="el-menu"
       :collapse="isCollapse"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
+      @select="menuSelect"
     >
       <!-- 没有子选项 -->
       <el-menu-item
         v-for="(item, index) in router"
         :key="'i' + index"
-        :index="item.path"
+        :index="item.name"
+        :route="item.path"
       >
         <i :class="item.icon"></i>
         <span slot="title">{{ item.name }}</span>
@@ -21,7 +24,8 @@
       <el-submenu
         v-for="(item, index) in children"
         :key="index"
-        :index="item.path"
+        :index="item.name"
+        :route="item.path"
       >
         <template #title>
           <i :class="item.icon"></i>
@@ -30,9 +34,11 @@
         <el-menu-item
           v-for="(itemm, indexx) in item.children"
           :key="indexx"
-          :index="item.path + '/' + itemm.path"
-          >{{ itemm.name }}</el-menu-item
+          :route="item.path + '/' + itemm.path"
+          :index="itemm.name"
         >
+          {{ itemm.name }}
+        </el-menu-item>
       </el-submenu>
     </el-menu>
   </nav>
@@ -42,6 +48,13 @@
 export default {
   data() {
     return {};
+  },
+  methods: {
+    menuSelect(index, path) {
+      console.log(index, path);
+      const CONTENT = { index: index, path: path };
+      this.$store.commit("setHeadBar", CONTENT);
+    }
   },
   computed: {
     router() {

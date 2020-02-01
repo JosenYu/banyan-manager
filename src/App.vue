@@ -65,6 +65,7 @@ export default {
     window.onresize = () => {
       this.windSize();
     };
+    this.$router.push("/");
   },
   computed: {
     isCollapse() {
