@@ -42,28 +42,36 @@ export default {
     name = "",
     model = "",
     brand = "",
-    curNumber = 0,
+    surplusNumber = 0,
     totalNumber = 0,
     price = 0,
-    totaPrice = 0
+    totalPrice = 0
   }) =>
     request({
       url: "/stock/purchase",
       method: "post",
-      data: { name, model, brand, curNumber, totalNumber, price, totaPrice }
+      data: {
+        name,
+        model,
+        brand,
+        surplusNumber,
+        totalNumber,
+        price,
+        totalPrice
+      }
     }),
   // 出售
   sell: ({
     stock_id = "",
-    sellnumber = "",
+    sellNumber = "",
     surplusNumber = "",
-    reatil = "",
-    totalRetal = ""
+    retail = "",
+    totalRetail = ""
   }) =>
     request({
       url: "/stock/sell",
       method: "post",
-      data: { stock_id, sellnumber, surplusNumber, reatil, totalRetal }
+      data: { stock_id, sellNumber, surplusNumber, retail, totalRetail }
     }),
   getSell: stock_id =>
     request({

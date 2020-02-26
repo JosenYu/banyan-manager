@@ -69,11 +69,6 @@ export default {
   },
   data() {
     return {
-      a: {
-        max: 1,
-        min: 0,
-        val: 0
-      },
       tableData: [
         {
           unit: "只",
@@ -112,7 +107,7 @@ export default {
       // 提交出售表单
       form: {
         stock_id: "",
-        sellnumber: 0,
+        sellNumber: 0,
         surplusNumber: 0,
         retail: 0,
         totalRetail: 0
@@ -129,6 +124,7 @@ export default {
     },
     // 提交出售单
     submitOut() {
+      debugger
       stock.sell(this.form).then(() => {
         this.$message({
           message: "提交成功",
@@ -178,7 +174,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    this.getStock(this.searchForm);
+    this.getStock();
   }
 };
 </script>

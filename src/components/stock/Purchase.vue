@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item label="商品数量（只）:">
         <el-input-number
-          v-model="form.number"
+          v-model="form.totalNumber"
           @change="handleChangeNumber"
         ></el-input-number>
       </el-form-item>
@@ -53,20 +53,13 @@ export default {
         price: { type: "number", message: "请输入数字" },
         totalPrice: { type: "number", message: "请输入数字" }
       },
-      title: {
-        name: "商品名称",
-        model: "型号/规格",
-        brand: "品牌",
-        number: "数量",
-        price: "单价/元",
-        totalPrice: "总价/元"
-      },
       // 提交的表单数据
       form: {
         name: "",
         model: "/",
         brand: "/",
-        number: 1,
+        surplusNumber: 1,
+        totalNumber: 1,
         price: 1,
         totalPrice: 1
       }
@@ -95,39 +88,24 @@ export default {
     },
     // 改变 price or number 时触发重新计算
     handleChangeNumber() {
-      this.form.totalPrice = this.form.price * this.form.number;
+      this.form.totalPrice = this.form.price * this.form.totalNumber;
     },
     // 提交创建表单
     submitForm() {
       if (!(this.form.name && this.form.model && this.form.brand)) return;
+      this.form.surplusNumber = this.form.totalNumber;
       stock.purchase(this.form).then(() => {
         this.$message.success("创建成功");
         this.form = {
           name: "",
           model: "/",
           brand: "/",
-          number: 1,
+          surplusNumber: 1,
+          totalNumber: 1,
           price: 1,
           totalPrice: 1
         };
       });
-    },
-    // reset
-    resetForm() {
-      for (const key in this.form) {
-        if (this.form.hasOwnProperty(key)) {
-          switch (key) {
-            case "number":
-            case "price":
-            case "totalPrice":
-              this.form[key] = 0;
-              break;
-            default:
-              this.form[key] = "";
-              break;
-          }
-        }
-      }
     }
   },
   computed: {},

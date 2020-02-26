@@ -14,7 +14,7 @@
     <!-- 出售记录 -->
     <el-table :data="sellList">
       <el-table-column label="ID" prop="_id"></el-table-column>
-      <el-table-column label="库存编号" prop="stock_id"></el-table-column>
+      <el-table-column label="商品编号" prop="stock_id"></el-table-column>
       <el-table-column label="出售数量" prop="sellNumber"></el-table-column>
       <el-table-column label="售价" prop="retail"></el-table-column>
       <el-table-column label="总售价" prop="totalRetail"></el-table-column>
@@ -40,6 +40,20 @@ export default {
       updatedAt: "2020-02-25T15:54:32.869Z",
       __v: 0
     },
+    title: [
+      "_id",
+      "__v",
+      "name",
+      "model",
+      "brand",
+      "unit",
+      "surplusNumber",
+      "totalNumber",
+      "price",
+      "totalPrice",
+      "createdAt",
+      "updatedAt"
+    ],
     sellList: [
       {
         sellNumber: 1,
@@ -56,6 +70,7 @@ export default {
   methods: {},
   mounted() {
     // console.log(this.$route.params.row);
+    this.detail = this.$route.params.row;
     // debugger;
     stock.getSell(this.$route.params.row._id).then(result => {
       // console.log(result);
