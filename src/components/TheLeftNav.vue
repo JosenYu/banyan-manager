@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     menuSelect(index, path) {
-      console.log(index, path);
+      // console.log(index, path);
       const CONTENT = { index: index, path: path };
       this.$store.commit("setHeadBar", CONTENT);
     }

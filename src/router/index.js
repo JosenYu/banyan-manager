@@ -13,32 +13,38 @@ const routes = [
   },
   {
     icon: "el-icon-s-management",
-    path: "/commodity",
+    path: "/stock",
     name: "商品",
-    component: () => import("@/views/CommodityState"),
+    component: () => import("@/views/Stock"),
     children: [
       {
         path: "quantity",
         name: "查询",
-        component: () => import("@/components/commodity/Quantity"),
+        component: () => import("@/components/stock/Quantity"),
         show: true
       },
       {
         path: "purchase",
         name: "采购",
-        component: () => import("@/components/commodity/purchase"),
+        component: () => import("@/components/stock/Purchase"),
         show: true
       },
       {
         path: "sell",
         name: "出售",
-        component: () => import("@/components/commodity/sell"),
+        component: () => import("@/components/stock/Sell"),
         show: true
       },
       {
         path: "detail",
         name: "详情页",
-        component: () => import("@/components/commodity/Detail")
+        component: () => import("@/components/stock/Detail")
+      },
+      {
+        path: "model",
+        name: "模型",
+        show: true,
+        component: () => import("@/components/stock/Model")
       }
     ]
   }

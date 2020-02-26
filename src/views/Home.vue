@@ -14,7 +14,7 @@
 <script>
 // @ is an alias to /src
 import echarts from "echarts";
-import { aaa, aaa2 } from "@/api/commodity";
+import { aaa, aaa2 } from "@/api/upload";
 export default {
   name: "home",
   components: {

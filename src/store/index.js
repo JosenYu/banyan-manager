@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isCollapse: false,
-    headBar: []
+    headBar: ["首页"]
   },
   mutations: {
     // 改变导航栏状态

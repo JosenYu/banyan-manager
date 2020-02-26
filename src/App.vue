@@ -69,8 +69,7 @@ export default {
   },
   computed: {
     isCollapse() {
-      let isCollapse = this.$store.state.isCollapse;
-      return isCollapse;
+      return this.$store.state.isCollapse;
     }
   }
 };

@@ -27,11 +27,7 @@ export default {
       return this.$store.state.headBar;
     }
   },
-  watch: {
-    title(n, o) {
-      console.log(n, o);
-    }
-  }
+  watch: {}
 };
 </script>
 <style lang="stylus" scoped>
