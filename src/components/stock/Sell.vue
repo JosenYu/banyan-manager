@@ -124,7 +124,6 @@ export default {
     },
     // 提交出售单
     submitOut() {
-      debugger
       stock.sell(this.form).then(() => {
         this.$message({
           message: "提交成功",
