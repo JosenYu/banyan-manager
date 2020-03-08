@@ -38,22 +38,7 @@ export default {
     return {
       // i18
       tableTitle: ["name", "model", "brand", "surplusNumber", "unit"],
-      tableData: [
-        {
-          unit: "只",
-          surplusNumber: 1,
-          totalNumber: 0,
-          price: 2,
-          totalPrice: 1,
-          _id: "5e554338870cb4b22aff8bcd",
-          name: "1",
-          model: "1",
-          brand: "1",
-          createdAt: "2020-02-25T15:54:32.869Z",
-          updatedAt: "2020-02-25T15:54:32.869Z",
-          __v: 0
-        }
-      ],
+      tableData: [],
       // 查询表达
       searchForm: {
         name: "",

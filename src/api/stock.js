@@ -1,6 +1,11 @@
 import request from "@/utils/request";
 
 export default {
+  searchOne: _id =>
+    request({
+      url: "/stock/searchOne",
+      params: { _id }
+    }),
   // 根据条件获取所有商品
   queryCondition: ({ name = "", model = "", brand = "", currentPage = 1 }) => {
     return request({
@@ -25,11 +30,11 @@ export default {
       }
     }),
   // 更新模型
-  updateModel: ({ id = "", name = "", model = "", brand = "" }) =>
+  updateModel: ({ _id = "", name = "", model = "", brand = "" }) =>
     request({
       url: "/stock/updateModel",
       method: "post",
-      data: { id, name, model, brand }
+      data: { _id, name, model, brand }
     }),
   // 查询商品模型
   getModel: ({ name = "", model = "", brand = "" }) =>
@@ -39,6 +44,7 @@ export default {
     }),
   // 库存采购
   purchase: ({
+    importer_id = "",
     name = "",
     model = "",
     brand = "",
@@ -51,6 +57,7 @@ export default {
       url: "/stock/purchase",
       method: "post",
       data: {
+        importer_id,
         name,
         model,
         brand,
@@ -62,6 +69,7 @@ export default {
     }),
   // 出售
   sell: ({
+    exporter_id = "",
     stock_id = "",
     sellNumber = "",
     surplusNumber = "",
@@ -71,8 +79,16 @@ export default {
     request({
       url: "/stock/sell",
       method: "post",
-      data: { stock_id, sellNumber, surplusNumber, retail, totalRetail }
+      data: {
+        exporter_id,
+        stock_id,
+        sellNumber,
+        surplusNumber,
+        retail,
+        totalRetail
+      }
     }),
+  // 获取出售信息
   getSell: stock_id =>
     request({
       url: "/stock/getSell",

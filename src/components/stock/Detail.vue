@@ -13,11 +13,14 @@
     <h1 class="detail__head-title">出口信息</h1>
     <!-- 出售记录 -->
     <el-table :data="sellList">
-      <el-table-column label="ID" prop="_id"></el-table-column>
-      <el-table-column label="商品编号" prop="stock_id"></el-table-column>
-      <el-table-column label="出售数量" prop="sellNumber"></el-table-column>
-      <el-table-column label="售价" prop="retail"></el-table-column>
-      <el-table-column label="总售价" prop="totalRetail"></el-table-column>
+      <el-table-column
+        v-for="(item, index) in sellTitle"
+        :key="index"
+        :label="$t(item)"
+        :prop="item"
+        width="200"
+        show-overflow-tooltip
+      ></el-table-column>
     </el-table>
   </div>
 </template>
@@ -38,7 +41,8 @@ export default {
       brand: "1",
       createdAt: "2020-02-25T15:54:32.869Z",
       updatedAt: "2020-02-25T15:54:32.869Z",
-      __v: 0
+      __v: 0,
+      importer_id: "123"
     },
     title: [
       "_id",
@@ -52,7 +56,22 @@ export default {
       "price",
       "totalPrice",
       "createdAt",
-      "updatedAt"
+      "updatedAt",
+      "importer_id"
+    ],
+    sellTitle: [
+      "_id",
+      "__v",
+      "stock_id",
+      "sellNumber",
+      "retail",
+      "totalRetail",
+      "createdAt",
+      "updatedAt",
+      "company",
+      "linkman",
+      "tel",
+      "address"
     ],
     sellList: [
       {
@@ -63,18 +82,34 @@ export default {
         stock_id: "5e554338870cb4b22aff8bcd",
         createdAt: "2020-02-26T07:09:20.785Z",
         updatedAt: "2020-02-26T07:09:20.785Z",
-        __v: 0
+        __v: 0,
+        company: "2",
+        linkman: "2",
+        tel: 2,
+        address: "2"
       }
     ]
   }),
   methods: {},
   mounted() {
-    // console.log(this.$route.params.row);
-    this.detail = this.$route.params.row;
-    // debugger;
-    stock.getSell(this.$route.params.row._id).then(result => {
-      // console.log(result);
-      this.sellList = result.data;
+    stock.searchOne(this.$route.params.row._id).then(result => {
+      result.data;
+      this.detail = result.data.oneStock;
+      this.sellList = result.data.sell.map(v => ({
+        sellNumber: v.sell.sellNumber,
+        retail: v.sell.retail,
+        totalRetail: v.sell.totalRetail,
+        _id: v.sell._id,
+        stock_id: v.sell.stock_id,
+        createdAt: v.sell.createdAt,
+        updatedAt: v.sell.updatedAt,
+        __v: v.sell.__v,
+        exporter_id: v.exporter._id,
+        company: v.exporter.company,
+        linkman: v.exporter.linkman,
+        tel: v.exporter.tel,
+        address: v.exporter.address
+      }));
     });
   }
 };

@@ -52,6 +52,18 @@
           ></el-input-number>
           <h3>￥ {{ form.totalRetail }} 元</h3>
         </div>
+        <!-- 出口商 -->
+        <el-autocomplete
+          v-model="exporter.linkman"
+          :fetch-suggestions="queryExporter"
+          placeholder="请输入内容"
+          @select="selectExporter"
+        >
+          <template #default="{item}">
+            <div class="name">联系人：{{ item.linkman }}</div>
+            <div class="tel">联系方式：{{ item.tel }}</div>
+          </template>
+        </el-autocomplete>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -63,26 +75,19 @@
 
 <script>
 import stock from "@/api/stock";
+import custom from "@/api/custom";
 export default {
   components: {
     TheSearch: () => import("@/components/TheSearch")
   },
   data() {
     return {
-      tableData: [
-        {
-          unit: "只",
-          surplusNumber: 100,
-          retail: 0.2,
-          totalRetail: 20,
-          _id: "5e4251b4b7fb6130a1108855",
-          name: "323",
-          model: "323",
-          brand: "qwe",
-          createdAt: "2020-02-11T07:03:16.748Z",
-          updatedAt: "2020-02-11T07:03:16.748Z"
-        }
-      ],
+      exporter: {
+        _id: "",
+        linkman: "",
+        tel: ""
+      },
+      tableData: [],
       searchForm: {
         name: "",
         model: "",
@@ -110,12 +115,33 @@ export default {
         sellNumber: 0,
         surplusNumber: 0,
         retail: 0,
-        totalRetail: 0
+        totalRetail: 0,
+        exporter_id: ""
       },
       dialogVisible: false
     };
   },
   methods: {
+    // 选择出口商
+    selectExporter(e) {
+      this.exporter = e;
+      this.form.exporter_id = this.exporter._id;
+    },
+    // 查询出口商
+    queryExporter(e, cb) {
+      custom.getExporter(e).then(result => {
+        cb(
+          result.data.doc.map(v => {
+            return {
+              value: v.linkman,
+              linkman: v.linkman,
+              tel: v.tel,
+              _id: v._id
+            };
+          })
+        );
+      });
+    },
     // 改变出售数量时发生的变化
     changeSellNumber() {
       this.form.surplusNumber = this.stock.surplusNumber;
@@ -124,14 +150,21 @@ export default {
     },
     // 提交出售单
     submitOut() {
-      stock.sell(this.form).then(() => {
-        this.$message({
-          message: "提交成功",
-          type: "success"
+      if (this.form.totalRetail && this.form.exporter_id) {
+        stock.sell(this.form).then(() => {
+          this.$message({
+            message: "提交成功",
+            type: "success"
+          });
+          this.dialogVisible = false;
+          this.getStock();
         });
-        this.dialogVisible = false;
-        this.getStock();
-      });
+      } else {
+        this.$message({
+          message: "出售内容有误！！！",
+          type: "warning"
+        });
+      }
     },
     // 打开出售框
     openSell({ row }) {

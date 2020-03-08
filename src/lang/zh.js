@@ -13,5 +13,12 @@ module.exports = {
   __v: "版本号",
   createdAt: "创建时间",
   updatedAt: "更新时间",
-  stock_id: "库存编号"
+  stock_id: "库存编号",
+  company: "公司",
+  linkman: "联系人",
+  address: "地址",
+  tel: "联系电话",
+  importer_id: "进口商ID",
+  exporter_id: "出口商ID",
+  sellNumber: "出售数量"
 };

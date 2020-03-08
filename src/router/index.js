@@ -11,10 +11,11 @@ const routes = [
     name: "首页",
     component: Home
   },
+  // 库存
   {
     icon: "el-icon-s-management",
     path: "/stock",
-    name: "商品",
+    name: "库存",
     component: () => import("@/views/Stock"),
     children: [
       {
@@ -45,6 +46,26 @@ const routes = [
         name: "模型",
         show: true,
         component: () => import("@/components/stock/Model")
+      }
+    ]
+  },
+  {
+    icon: "el-icon-s-custom",
+    path: "/custom",
+    name: "客户",
+    component: () => import("@/views/Custom"),
+    children: [
+      {
+        path: "importer",
+        name: "进货商",
+        show: true,
+        component: () => import("@/components/custom/Importer")
+      },
+      {
+        path: "exporter",
+        name: "出货商",
+        show: true,
+        component: () => import("@/components/custom/Exporter")
       }
     ]
   }
