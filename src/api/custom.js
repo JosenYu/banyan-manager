@@ -30,10 +30,5 @@ export default {
       url: "/custom/createExporter",
       method: "post",
       data: data
-    }),
-  // 修改出口商
-  updateExporter: () =>
-    request({
-      url: ""
     })
 };

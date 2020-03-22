@@ -121,7 +121,7 @@ export default {
               value: v.name,
               name: v.name,
               model: v.model,
-              brand: v.brand
+              brand: v.brandecharts
             };
           })
         );

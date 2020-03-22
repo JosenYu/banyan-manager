@@ -15,6 +15,13 @@
     </el-form>
     <el-dialog title="商品信息修改" :visible.sync="dialogStock" width="30%">
       <el-form :model="detail" label-width="100px">
+        <el-form-item label="总数量">
+          <el-input-number
+            :min="0"
+            @change="changePrice"
+            v-model="detail.totalNumber"
+          ></el-input-number>
+        </el-form-item>
         <el-form-item label="单价">
           <el-input-number
             :min="0"
@@ -36,53 +43,23 @@
         </el-button>
       </span>
     </el-dialog>
-    <h2 class="detail__head-title">出口信息</h2>
-    <!-- 出售记录 -->
-    <el-table :data="sellTableList">
-      <el-table-column type="expand">
-        <template #default="{row}">
-          <el-form inline>
-            <el-form-item
-              v-for="(item, index) in sellMoreTitle"
-              :key="index"
-              :label="$t(item) + ':'"
-            >
-              <span>{{ row[item] }}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-for="(item, index) in sellTableTitle"
-        :key="index"
-        :label="$t(item)"
-        :prop="item"
-        width="200"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column label="操作">
-        <template>
-          <el-button
-            icon="el-icon-edit"
-            type="primary"
-            @click="openUpdateSell"
-          ></el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <!-- 出售信息 -->
+    <DetailSell :sellTableList="sellTableList" @updateSell="updateSell" />
   </div>
 </template>
 
 <script>
 import stock from "@/api/stock";
 export default {
+  components: {
+    DetailSell: () => import("./DetailSell")
+  },
   data: () => ({
     dialogStock: false,
-    dialogSell: false,
     detail: {
       unit: "只",
       surplusNumber: 1,
-      totalNumber: 0,
+      totalNumber: 10,
       price: 2,
       totalPrice: 1,
       _id: "5e554338870cb4b22aff8bcd",
@@ -109,55 +86,54 @@ export default {
       "updatedAt",
       "importer_id"
     ],
-    sellTableTitle: ["sellNumber", "retail", "totalRetail", "company"],
-    sellMoreTitle: [
-      "sellNumber",
-      "retail",
-      "totalRetail",
-      "company",
-      "linkman",
-      "tel",
-      "address",
-      "_id",
-      "__v",
-      "stock_id",
-      "createdAt",
-      "updatedAt"
-    ],
-    sellTableList: [
-      {
-        sellNumber: 1,
-        retail: 1,
-        totalRetail: 1,
-        _id: "5e5619a011e024bbcaa09085",
-        stock_id: "5e554338870cb4b22aff8bcd",
-        createdAt: "2020-02-26T07:09:20.785Z",
-        updatedAt: "2020-02-26T07:09:20.785Z",
-        __v: 0,
-        company: "2",
-        linkman: "2",
-        tel: 2,
-        address: "2"
-      }
-    ]
+    sellTableList: []
   }),
   methods: {
     changePrice() {
       this.detail.totalPrice = this.detail.price * this.detail.totalNumber;
     },
-    // 提交更新的 stock
+    // 更新厂库 stock
     updateStockSubmit() {
-      this.detail.price;
-      this.detail.totalPrice;
-      this.detail._id;
-      stock.updateStock(this.detail).then(() => {
-        this.searchOne();
-      });
+      const totalNumber =
+        this.sellTableList.reduce((a, b) => a.sellNumber + b.sellNumber, {
+          sellNumber: 0
+        }) + this.detail.surplusNumber;
+      if (this.detail.totalNumber >= totalNumber) {
+        this.detail.surplusNumber =
+          this.detail.totalNumber -
+          this.sellTableList.reduce((a, b) => a.sellNumber + b.sellNumber, {
+            sellNumber: 0
+          });
+        stock.updateStock(this.detail).then(() => {
+          this.dialogStock = false;
+          this.searchOne();
+        });
+      } else {
+        this.$message({
+          message: "总数量过少",
+          type: "warning"
+        });
+      }
     },
-    openUpdateSell() {},
+    // 更新出售
+    updateSell(sellForm) {
+      sellForm = Object.assign(sellForm, {
+        surplusNumber: this.detail.surplusNumber - sellForm.sellNumber
+      });
+      if (sellForm.surplusNumber < 0) {
+        this.$message({
+          message: "出售数量大于剩余数量",
+          type: "warning"
+        });
+      } else {
+        stock.updateSell(sellForm).then(() => {
+          this.searchOne;
+        });
+      }
+    },
+    // 查询某一个商品的详细信息
     searchOne() {
       stock.searchOne(this.$route.params.row._id).then(result => {
-        result.data;
         this.detail = result.data.oneStock;
         this.sellTableList = result.data.sell.map(v => ({
           sellNumber: v.sell.sellNumber,

@@ -39,7 +39,7 @@ const routes = [
       {
         path: "detail",
         name: "详情页",
-        component: () => import("@/components/stock/Detail")
+        component: () => import("@/components/stock/detail/Index")
       },
       {
         path: "model",

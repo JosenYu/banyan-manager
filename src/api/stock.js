@@ -1,6 +1,20 @@
 import request from "@/utils/request";
-
 export default {
+  // 更新某一个出库表
+  updateSell: ({ _id, surplusNumber, retail, totalRetail }) =>
+    request({
+      url: "/stock/updateSell",
+      method: "post",
+      data: { _id, retail, totalRetail, surplusNumber }
+    }),
+  // 修改某一个入库
+  updateStock: ({ _id, price, totalPrice, totalNumber, surplusNumber }) =>
+    request({
+      url: "/stock/updateStock",
+      method: "post",
+      data: { _id, price, totalPrice, totalNumber, surplusNumber }
+    }),
+  // 搜索某一个
   searchOne: _id =>
     request({
       url: "/stock/searchOne",
