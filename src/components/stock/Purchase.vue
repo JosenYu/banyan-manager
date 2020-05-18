@@ -58,20 +58,20 @@
 
 <script>
 import stock from "@/api/stock";
-import custom from "@/api/custom";
+import custom from "@/api/customer";
 export default {
   data() {
     return {
       importer: {
         _id: "",
         linkman: "",
-        tel: ""
+        tel: "",
       },
       rules: {
         name: { required: true, message: "请输入商品名称" },
         number: { type: "number", message: "请输入数字" },
         price: { type: "number", message: "请输入数字" },
-        totalPrice: { type: "number", message: "请输入数字" }
+        totalPrice: { type: "number", message: "请输入数字" },
       },
       // 提交的表单数据
       form: {
@@ -82,21 +82,21 @@ export default {
         totalNumber: 1,
         price: 1,
         totalPrice: 1,
-        importer_id: ""
-      }
+        importer_id: "",
+      },
     };
   },
   methods: {
     // 查询进口商
     queryImporter(e, cb) {
-      custom.getImporter(e).then(result => {
+      custom.getImporter(e).then((result) => {
         cb(
-          result.data.doc.map(v => {
+          result.data.doc.map((v) => {
             return {
               value: v.linkman,
               linkman: v.linkman,
               tel: v.tel,
-              _id: v._id
+              _id: v._id,
             };
           })
         );
@@ -113,15 +113,15 @@ export default {
       this.form.brand = v.brand;
     },
     querySearch(queryString, cb) {
-      stock.getModel({ name: queryString }).then(result => {
+      stock.getModel({ name: queryString }).then((result) => {
         // console.log(result.data.doc);
         cb(
-          result.data.doc.map(v => {
+          result.data.doc.map((v) => {
             return {
               value: v.name,
               name: v.name,
               model: v.model,
-              brand: v.brandecharts
+              brand: v.brandecharts,
             };
           })
         );
@@ -136,7 +136,7 @@ export default {
       if (!(this.form.importer_id && this.form.name)) {
         this.$message({
           message: "输入内容有误！！！",
-          type: "warning"
+          type: "warning",
         });
       } else {
         this.form.surplusNumber = this.form.totalNumber;
@@ -150,14 +150,14 @@ export default {
             totalNumber: 1,
             price: 1,
             totalPrice: 1,
-            importer_id: ""
+            importer_id: "",
           };
         });
       }
-    }
+    },
   },
   computed: {},
-  watch: {}
+  watch: {},
 };
 </script>
 

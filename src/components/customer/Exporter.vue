@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import custom from "@/api/custom";
+import custom from "@/api/customer";
 export default {
   components: {
     SearchLinkman: () => import("./SearchLinkman")

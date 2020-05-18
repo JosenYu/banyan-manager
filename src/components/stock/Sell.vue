@@ -75,24 +75,24 @@
 
 <script>
 import stock from "@/api/stock";
-import custom from "@/api/custom";
+import custom from "@/api/customer";
 export default {
   components: {
-    TheSearch: () => import("@/components/TheSearch")
+    TheSearch: () => import("@/components/TheSearch"),
   },
   data() {
     return {
       exporter: {
         _id: "",
         linkman: "",
-        tel: ""
+        tel: "",
       },
       tableData: [],
       searchForm: {
         name: "",
         model: "",
         brand: "",
-        currentPage: 1
+        currentPage: 1,
       },
       total: 1,
       // 需要出售的商品信息
@@ -107,7 +107,7 @@ export default {
         model: "323",
         brand: "qwe",
         createdAt: "2020-02-11T07:03:16.748Z",
-        updatedAt: "2020-02-11T07:03:16.748Z"
+        updatedAt: "2020-02-11T07:03:16.748Z",
       },
       // 提交出售表单
       form: {
@@ -116,9 +116,9 @@ export default {
         surplusNumber: 0,
         retail: 0,
         totalRetail: 0,
-        exporter_id: ""
+        exporter_id: "",
       },
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
   methods: {
@@ -129,14 +129,14 @@ export default {
     },
     // 查询出口商
     queryExporter(e, cb) {
-      custom.getExporter(e).then(result => {
+      custom.getExporter(e).then((result) => {
         cb(
-          result.data.doc.map(v => {
+          result.data.doc.map((v) => {
             return {
               value: v.linkman,
               linkman: v.linkman,
               tel: v.tel,
-              _id: v._id
+              _id: v._id,
             };
           })
         );
@@ -154,7 +154,7 @@ export default {
         stock.sell(this.form).then(() => {
           this.$message({
             message: "提交成功",
-            type: "success"
+            type: "success",
           });
           this.dialogVisible = false;
           this.getStock();
@@ -162,7 +162,7 @@ export default {
       } else {
         this.$message({
           message: "出售内容有误！！！",
-          type: "warning"
+          type: "warning",
         });
       }
     },
@@ -176,7 +176,7 @@ export default {
         max: this.stock.surplusNumber,
         retail: 0,
         totalRetail: 0,
-        surplusNumber: row.surplusNumber
+        surplusNumber: row.surplusNumber,
       };
     },
     // 改变当前页码
@@ -197,17 +197,17 @@ export default {
      * @param {String} pageCurrent 当前页码
      */
     getStock() {
-      stock.queryCondition(this.searchForm).then(result => {
+      stock.queryCondition(this.searchForm).then((result) => {
         this.tableData = result.data.doc;
         this.total = result.data.count;
       });
-    }
+    },
   },
   computed: {},
   watch: {},
   mounted() {
     this.getStock();
-  }
+  },
 };
 </script>
 

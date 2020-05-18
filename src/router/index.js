@@ -51,21 +51,21 @@ const routes = [
   },
   {
     icon: "el-icon-s-custom",
-    path: "/custom",
+    path: "/customer",
     name: "客户",
-    component: () => import("@/views/Custom"),
+    component: () => import("@/views/Customer"),
     children: [
       {
         path: "importer",
         name: "进货商",
         show: true,
-        component: () => import("@/components/custom/Importer")
+        component: () => import("@/components/customer/Importer")
       },
       {
         path: "exporter",
         name: "出货商",
         show: true,
-        component: () => import("@/components/custom/Exporter")
+        component: () => import("@/components/customer/Exporter")
       }
     ]
   }
