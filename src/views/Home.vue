@@ -4,6 +4,7 @@
     <!-- <div id="main"></div> -->
     <input type="file" name="file" id="file" @change="handleFileChange" />
     <button @click="handleUpload">Upload</button>
+    <div>123</div>
   </div>
 </template>
 <style lang="stylus" scoped>
