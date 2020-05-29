@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     router() {
-      return this.$router.options.routes.filter(v => !v.children);
+      return this.$router.options.routes.filter(v => !v.children && v.show);
     },
     children() {
       let list = this.$router.options.routes.filter(v => v.children);

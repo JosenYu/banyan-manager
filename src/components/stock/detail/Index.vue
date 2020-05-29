@@ -15,6 +15,14 @@
     </el-form>
     <el-dialog title="商品信息修改" :visible.sync="dialogStock" width="30%">
       <el-form :model="detail" label-width="100px">
+        <el-form-item label="剩余数量">
+          <el-input-number
+            :min="0"
+            :max="detail.totalNumber"
+            @change="changePrice"
+            v-model="detail.surplusNumber"
+          ></el-input-number>
+        </el-form-item>
         <el-form-item label="总数量">
           <el-input-number
             :min="0"
@@ -44,7 +52,11 @@
       </span>
     </el-dialog>
     <!-- 出售信息 -->
-    <DetailSell :sellTableList="sellTableList" @updateSell="updateSell" />
+    <DetailSell
+      @updateSell="updateSell"
+      :sellTableList="sellTableList"
+      :detail="detail"
+    />
   </div>
 </template>
 
@@ -94,42 +106,16 @@ export default {
     },
     // 更新厂库 stock
     updateStockSubmit() {
-      const totalNumber =
-        this.sellTableList.reduce((a, b) => a.sellNumber + b.sellNumber, {
-          sellNumber: 0
-        }) + this.detail.surplusNumber;
-      if (this.detail.totalNumber >= totalNumber) {
-        this.detail.surplusNumber =
-          this.detail.totalNumber -
-          this.sellTableList.reduce((a, b) => a.sellNumber + b.sellNumber, {
-            sellNumber: 0
-          });
-        stock.updateStock(this.detail).then(() => {
-          this.dialogStock = false;
-          this.searchOne();
-        });
-      } else {
-        this.$message({
-          message: "总数量过少",
-          type: "warning"
-        });
-      }
+      stock.updateStock(this.detail).then(() => {
+        this.dialogStock = false;
+        this.searchOne();
+      });
     },
     // 更新出售
     updateSell(sellForm) {
-      sellForm = Object.assign(sellForm, {
-        surplusNumber: this.detail.surplusNumber - sellForm.sellNumber
+      stock.updateSell(sellForm).then(() => {
+        this.searchOne();
       });
-      if (sellForm.surplusNumber < 0) {
-        this.$message({
-          message: "出售数量大于剩余数量",
-          type: "warning"
-        });
-      } else {
-        stock.updateSell(sellForm).then(() => {
-          this.searchOne;
-        });
-      }
     },
     // 查询某一个商品的详细信息
     searchOne() {

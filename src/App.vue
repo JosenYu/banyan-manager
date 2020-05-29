@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <TheLeftNav class="left" />
-    <div
-      :class="{ 'max-right': isCollapse, 'min-right': !isCollapse }"
-      class="right"
-    >
+    <TheLeftNav class="left" v-if="isSingIn" />
+    <div :class="classObject" class="right" v-if="isSingIn">
       <TheHeadBar class="the-head-bar" />
       <router-view class="view" />
     </div>
+    <router-view class="view" v-else />
   </div>
 </template>
 
@@ -49,6 +47,20 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    classObject() {
+      return {
+        "max-right": this.$store.state.isCollapse,
+        "min-right": !this.$store.state.isCollapse
+      };
+    },
+    isCollapse() {
+      return this.$store.state.isCollapse;
+    },
+    isSingIn() {
+      return this.$store.state.isLogin;
+    }
+  },
   methods: {
     // 检测屏幕视图部分（client）宽度
     windSize() {
@@ -66,11 +78,6 @@ export default {
       this.windSize();
     };
     this.$router.push("/");
-  },
-  computed: {
-    isCollapse() {
-      return this.$store.state.isCollapse;
-    }
   }
 };
 </script>

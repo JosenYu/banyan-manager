@@ -1,11 +1,11 @@
 import request from "@/utils/request";
 export default {
   // 更新某一个出库表
-  updateSell: ({ _id, surplusNumber, retail, totalRetail }) =>
+  updateSell: ({ _id, sellNumber, retail, totalRetail }) =>
     request({
       url: "/stock/updateSell",
       method: "post",
-      data: { _id, retail, totalRetail, surplusNumber }
+      data: { _id, sellNumber, retail, totalRetail }
     }),
   // 修改某一个入库
   updateStock: ({ _id, price, totalPrice, totalNumber, surplusNumber }) =>
@@ -51,10 +51,10 @@ export default {
       data: { _id, name, model, brand }
     }),
   // 查询商品模型
-  getModel: ({ name = "", model = "", brand = "" }) =>
+  getModel: ({ name = "", model = "", brand = "", currentPage = 1 }) =>
     request({
       url: "/stock/getModel",
-      params: { name, model, brand }
+      params: { name, model, brand, currentPage }
     }),
   // 库存采购
   purchase: ({

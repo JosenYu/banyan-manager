@@ -1,11 +1,11 @@
 <template>
   <!-- 创建入库 -->
-  <div class="create">
+  <div class="purchase">
     <el-form class="el-form-purchase" ref="form" :model="form" :rules="rules">
       <!-- 进口商 -->
       <el-form-item label="进货源：">
         <el-autocomplete
-          class="create__import__input"
+          class="purchase__import__input"
           v-model="importer.linkman"
           :fetch-suggestions="queryImporter"
           placeholder="请输入内容"
@@ -35,18 +35,24 @@
       </el-form-item>
       <el-form-item label="商品数量（只）:">
         <el-input-number
+          :min="0"
           v-model="form.totalNumber"
           @change="handleChangeNumber"
         ></el-input-number>
       </el-form-item>
       <el-form-item label="商品进价（只/元）:">
         <el-input-number
+          :min="0"
           v-model="form.price"
           @change="handleChangeNumber"
         ></el-input-number>
       </el-form-item>
       <el-form-item label="商品总进价（元）:">
-        <el-input-number disabled v-model="form.totalPrice"></el-input-number>
+        <el-input-number
+          :min="0"
+          disabled
+          v-model="form.totalPrice"
+        ></el-input-number>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">立即创建</el-button>
@@ -65,13 +71,13 @@ export default {
       importer: {
         _id: "",
         linkman: "",
-        tel: "",
+        tel: ""
       },
       rules: {
         name: { required: true, message: "请输入商品名称" },
         number: { type: "number", message: "请输入数字" },
         price: { type: "number", message: "请输入数字" },
-        totalPrice: { type: "number", message: "请输入数字" },
+        totalPrice: { type: "number", message: "请输入数字" }
       },
       // 提交的表单数据
       form: {
@@ -82,24 +88,28 @@ export default {
         totalNumber: 1,
         price: 1,
         totalPrice: 1,
-        importer_id: "",
-      },
+        importer_id: ""
+      }
     };
   },
   methods: {
-    // 查询进口商
+    // 查询进
     queryImporter(e, cb) {
-      custom.getImporter(e).then((result) => {
-        cb(
-          result.data.doc.map((v) => {
-            return {
-              value: v.linkman,
-              linkman: v.linkman,
-              tel: v.tel,
-              _id: v._id,
-            };
-          })
-        );
+      custom.getImporter(e).then(result => {
+        if (result.data.doc.length === 0) {
+          cb([{ value: "暂无数据" }]);
+        } else {
+          cb(
+            result.data.doc.map(v => {
+              return {
+                value: v.linkman,
+                linkman: v.linkman,
+                tel: v.tel,
+                _id: v._id
+              };
+            })
+          );
+        }
       });
     },
     // 选装进口商
@@ -113,18 +123,22 @@ export default {
       this.form.brand = v.brand;
     },
     querySearch(queryString, cb) {
-      stock.getModel({ name: queryString }).then((result) => {
+      stock.getModel({ name: queryString }).then(result => {
         // console.log(result.data.doc);
-        cb(
-          result.data.doc.map((v) => {
-            return {
-              value: v.name,
-              name: v.name,
-              model: v.model,
-              brand: v.brandecharts,
-            };
-          })
-        );
+        if (result.data.count === 0) {
+          cb([{ value: "暂无数据" }]);
+        } else {
+          cb(
+            result.data.doc.map(v => {
+              return {
+                value: v.name,
+                name: v.name,
+                model: v.model,
+                brand: v.brand
+              };
+            })
+          );
+        }
       });
     },
     // 改变 price or number 时触发重新计算
@@ -136,12 +150,17 @@ export default {
       if (!(this.form.importer_id && this.form.name)) {
         this.$message({
           message: "输入内容有误！！！",
-          type: "warning",
+          type: "warning"
         });
       } else {
         this.form.surplusNumber = this.form.totalNumber;
         stock.purchase(this.form).then(() => {
           this.$message.success("创建成功");
+          this.importer = {
+            _id: "",
+            linkman: "",
+            tel: ""
+          };
           this.form = {
             name: "",
             model: "/",
@@ -150,23 +169,23 @@ export default {
             totalNumber: 1,
             price: 1,
             totalPrice: 1,
-            importer_id: "",
+            importer_id: ""
           };
         });
       }
-    },
+    }
   },
   computed: {},
-  watch: {},
+  watch: {}
 };
 </script>
 
 <style lang="stylus" scoped>
-.create
+.purchase
   padding 20px
   .el-form-purchase
     width 50%
-    .create__import__input
+    .purchase__import__input
       .tel
         font-size 12px
         color gray

@@ -14,9 +14,11 @@ export default {
       data: data
     }),
   // 修改进口商
-  updateImporter: () =>
+  updateImporter: data =>
     request({
-      url: ""
+      url: "/customer/updateImporter",
+      method: "post",
+      data: data
     }),
   // 查询出口商
   getExporter: (linkman = "") =>
@@ -28,6 +30,13 @@ export default {
   createExporter: data =>
     request({
       url: "/customer/createExporter",
+      method: "post",
+      data: data
+    }),
+  // 更新出库源
+  updateExporter: data =>
+    request({
+      url: "/customer/updateExporter",
       method: "post",
       data: data
     })

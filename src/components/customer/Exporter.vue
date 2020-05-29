@@ -34,23 +34,29 @@
       >
       </el-table-column>
       <el-table-column label="操作">
-        <el-button @click="showImporter">修改</el-button>
+        <template #default="{row}">
+          <el-button @click="updateExport(row)">修改</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 弹出框 -->
-    <el-dialog title="入库源" :visible.sync="dialogVisible" width="50%">
-      <el-form ref="form" :model="addForm" label-width="120px" :rules="rules">
+    <el-dialog
+      :title="form.type + '出库源'"
+      :visible.sync="dialogVisible"
+      width="50%"
+    >
+      <el-form ref="form" :model="form" label-width="120px" :rules="rules">
         <el-form-item label="联系人：" prop="linkman">
-          <el-input v-model="addForm.linkman" />
+          <el-input v-model="form.linkman" />
         </el-form-item>
         <el-form-item label="公司名称：">
-          <el-input v-model="addForm.company" />
+          <el-input v-model="form.company" />
         </el-form-item>
         <el-form-item label="联系电话：" prop="tel">
-          <el-input type="number" v-model.number="addForm.tel" />
+          <el-input type="number" v-model.number="form.tel" />
         </el-form-item>
         <el-form-item label="地址：">
-          <el-input v-model="addForm.address" />
+          <el-input v-model="form.address" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -81,28 +87,41 @@ export default {
     total: 1,
     title: ["_id", "company", "address"],
     tableData: [],
-    addForm: {
+    form: {
+      type: "添加",
       company: "",
       linkman: "",
-      tel: new Number(),
+      tel: 0,
       address: ""
     }
   }),
   methods: {
-    showImporter() {},
+    updateExport(e) {
+      this.dialogVisible = true;
+      this.form = e;
+      this.form.type = "更新";
+    },
     search(e) {
       this.getExporter(e);
     },
     add() {
       this.dialogVisible = true;
+      this.form.type = "添加";
     },
     create() {
       // 联系人和联系方式不能为空
-      if (this.addForm.linkman && this.addForm.tel) {
-        custom.createExporter(this.addForm).then(() => {
-          this.dialogVisible = false;
-          this.getExporter();
-        });
+      if (this.form.linkman && this.form.tel) {
+        if (this.form.type === "添加") {
+          custom.createExporter(this.form).then(() => {
+            this.dialogVisible = false;
+            this.getExporter();
+          });
+        } else {
+          custom.updateExporter(this.form).then(() => {
+            this.dialogVisible = false;
+            this.getExporter();
+          });
+        }
       } else {
         this.$message({
           message: "联系人和联系电话有误",

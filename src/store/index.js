@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isCollapse: false,
-    headBar: ["首页"]
+    headBar: ["首页"],
+    isLogin: false
   },
   mutations: {
     // 改变导航栏状态
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     // 设置头部定位
     setHeadBar(state, { path }) {
       state.headBar = path;
+    },
+    setLogin(state, is) {
+      state.isLogin = is
     }
   },
   getters: {

@@ -1,6 +1,6 @@
 <template>
   <div class="detail_sell">
-    <h3>出售信息</h3>
+    <h3 class="detail_sell-title">出售信息</h3>
     <!-- 记录详情 -->
     <el-table :data="sellTableList">
       <el-table-column type="expand">
@@ -41,6 +41,7 @@
         <el-form-item label="出售数量">
           <el-input-number
             :min="1"
+            :max="detail.surplusNumber"
             @change="changePrice"
             v-model="sellForm.sellNumber"
           ></el-input-number>
@@ -61,9 +62,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateSubmit">
-          提 交
-        </el-button>
+        <el-button type="primary" @click="updateSubmit">提 交</el-button>
       </span>
     </el-dialog>
   </div>
@@ -72,6 +71,7 @@
 <script>
 export default {
   props: {
+    detail: Object,
     sellTableList: {
       type: Array,
       default: () => ({
@@ -121,6 +121,7 @@ export default {
       // console.log(this.sellForm);
       this.dialogVisible = true;
     },
+    // 更新出售
     updateSubmit() {
       this.dialogVisible = false;
       this.$emit("updateSell", this.sellForm);
@@ -129,4 +130,9 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.detail_sell
+  .detail_sell-title
+    border-left 2px solid green
+    padding-left 10px
+</style>
