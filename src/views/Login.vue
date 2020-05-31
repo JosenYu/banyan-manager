@@ -6,6 +6,7 @@
         v-model="password"
         placeholder="密码"
         type="password"
+        @keyup.enter.native="singIn"
       ></el-input>
       <el-button type="primary" class="login-box__singIn" @click="singIn">
         登 入
@@ -46,6 +47,8 @@ export default {
   display flex
   justify-content center
   align-items center
+  background-repeat no-repeat
+  background-size 100%
   .login-box
     background-color white
     padding 50px 20px

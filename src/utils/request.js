@@ -3,7 +3,7 @@ import { Message } from "element-ui";
 
 const baseURL = {
   development: "/",
-  production: "http://funjosen.fun:3000"
+  production: "https://funjosen.fun:3000"
 };
 
 // console.log("当前环境", process.env.NODE_ENV);

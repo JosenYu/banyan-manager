@@ -51,10 +51,16 @@ export default {
       data: { _id, name, model, brand }
     }),
   // 查询商品模型
-  getModel: ({ name = "", model = "", brand = "", currentPage = 1 }) =>
+  getModel: ({
+    name = "",
+    model = "",
+    brand = "",
+    currentPage = 1,
+    getAll = false
+  }) =>
     request({
       url: "/stock/getModel",
-      params: { name, model, brand, currentPage }
+      params: { name, model, brand, currentPage, getAll }
     }),
   // 库存采购
   purchase: ({

@@ -1,41 +1,40 @@
 <template>
   <div id="app">
-    <TheLeftNav class="left" v-if="isSingIn" />
-    <div :class="classObject" class="right" v-if="isSingIn">
+    <!-- 登入后的 box -->
+    <div class="right" v-if="isSingIn">
+      <TheLeftNav class="left" />
       <TheHeadBar class="the-head-bar" />
-      <router-view class="view" />
+      <router-view class="view" :class="{ 'max-right': isCollapse }" />
     </div>
+    <!-- 未登入 box -->
     <router-view class="view" v-else />
   </div>
 </template>
 
 <style lang="stylus">
 @import url('~@/style/element.css')
-html, body
-  margin 0
-  min-width 1080px
-  #app
-    &:after
-      content ''
-      display block
-      clear both
-    .the-head-bar
-      position sticky
-      top 0
-      z-index 1
-    .left
-      position fixed
-      height 100%
-      z-index 2
-    .right
-      z-index 1
+#app
+  &:after
+    content ''
+    display block
+    clear both
+  .the-head-bar
+    position sticky
+    top 0
+    z-index 1
+  .left
+    position fixed
+    height 100%
+    z-index 2
+  .right
+    z-index 1
+    transition-duration 1s
+    .view
+      padding 10px
+      margin-left 200px
       transition-duration 1s
-      .view
-        padding 10px
-.max-right
-  margin-left 65px
-.min-right
-  margin-left 200px
+    .max-right
+      margin-left 65px
 </style>
 
 <script>
@@ -49,10 +48,7 @@ export default {
   },
   computed: {
     classObject() {
-      return {
-        "max-right": this.$store.state.isCollapse,
-        "min-right": !this.$store.state.isCollapse
-      };
+      return {};
     },
     isCollapse() {
       return this.$store.state.isCollapse;

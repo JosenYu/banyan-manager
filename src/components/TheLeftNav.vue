@@ -49,13 +49,6 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    menuSelect(index, path) {
-      // console.log(index, path);
-      const CONTENT = { index: index, path: path };
-      this.$store.commit("setHeadBar", CONTENT);
-    }
-  },
   computed: {
     router() {
       return this.$router.options.routes.filter(v => !v.children && v.show);
@@ -72,6 +65,13 @@ export default {
     isCollapse() {
       let isCollapse = this.$store.state.isCollapse;
       return isCollapse;
+    }
+  },
+  methods: {
+    menuSelect(index, path) {
+      // console.log(index, path);
+      const CONTENT = { index: index, path: path };
+      this.$store.commit("setHeadBar", CONTENT);
     }
   }
 };

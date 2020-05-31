@@ -19,7 +19,7 @@ export default new Vuex.Store({
       state.headBar = path;
     },
     setLogin(state, is) {
-      state.isLogin = is
+      state.isLogin = is;
     }
   },
   getters: {

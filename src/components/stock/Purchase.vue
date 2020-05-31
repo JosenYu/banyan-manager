@@ -68,6 +68,7 @@ import custom from "@/api/customer";
 export default {
   data() {
     return {
+      currentPage: 1,
       importer: {
         _id: "",
         linkman: "",
@@ -123,13 +124,13 @@ export default {
       this.form.brand = v.brand;
     },
     querySearch(queryString, cb) {
-      stock.getModel({ name: queryString }).then(result => {
+      stock.getModel({ name: queryString, getAll: true }).then(result => {
         // console.log(result.data.doc);
-        if (result.data.count === 0) {
+        if (result.data.length === 0) {
           cb([{ value: "暂无数据" }]);
         } else {
           cb(
-            result.data.doc.map(v => {
+            result.data.map(v => {
               return {
                 value: v.name,
                 name: v.name,
@@ -175,6 +176,7 @@ export default {
       }
     }
   },
+  mounted() {},
   computed: {},
   watch: {}
 };
@@ -184,7 +186,6 @@ export default {
 .purchase
   padding 20px
   .el-form-purchase
-    width 50%
     .purchase__import__input
       .tel
         font-size 12px

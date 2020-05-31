@@ -97,22 +97,19 @@ export default {
           });
         });
       } else {
-        stock.getModel(this.modelForm).then(result => {
-          // 如果数量大于 1 说明已经有了
-          if (result.data.doc.length >= 1) {
+        stock.createModel(this.modelForm).then(result => {
+          if (result.data.doc >= 1) {
             this.$message({
               message: "已经存在模型",
               type: "warning"
             });
           } else {
-            stock.createModel(this.modelForm).then(() => {
-              this.modelForm = { name: "", model: "", brand: "" };
-              this.$message({
-                message: "创建成功",
-                type: "success"
-              });
-              this.getModel();
+            this.modelForm = { name: "", model: "", brand: "" };
+            this.$message({
+              message: "创建成功",
+              type: "success"
             });
+            this.getModel();
           }
         });
       }
