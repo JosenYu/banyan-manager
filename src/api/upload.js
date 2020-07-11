@@ -1,5 +1,4 @@
-import request from "@/utils/request";
-export { aaa, aaa2 };
+import request from "./service/request";
 const aaa = data =>
   request({
     url: "/upload/aaa",
@@ -14,3 +13,4 @@ const aaa2 = name =>
       name: name
     }
   });
+export { aaa, aaa2 };

@@ -2,7 +2,8 @@ import axios from "axios";
 import { Message } from "element-ui";
 
 const baseURL = {
-  development: "/",
+  // development: "/",
+  development: "https://funjosen.fun:3000",
   production: "https://funjosen.fun:3000"
 };
 

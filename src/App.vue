@@ -74,6 +74,10 @@ export default {
       this.windSize();
     };
     this.$router.push("/");
+  },
+  destroyed() {
+    window.onresize = null;
+    debugger;
   }
 };
 </script>

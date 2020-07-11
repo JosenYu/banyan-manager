@@ -43,10 +43,10 @@ export default {
 .login
   height 100vh
   width 100vw
-  background-image url('//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg')
   display flex
   justify-content center
   align-items center
+  background-image url('//res.wx.qq.com/a/wx_fed/webwx/res/static/img/2zrdI1g.jpg')
   background-repeat no-repeat
   background-size 100%
   .login-box

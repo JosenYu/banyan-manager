@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from "./service/request";
 export default {
   // 查询进口商信息
   getImporter: (linkman = "") =>

@@ -1,4 +1,5 @@
-import request from "@/utils/request";
+import request from "./service/request";
+
 export default {
   // 更新某一个出库表
   updateSell: ({ _id, sellNumber, retail, totalRetail }) =>

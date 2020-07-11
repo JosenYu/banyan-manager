@@ -17,36 +17,36 @@ const routes = [
     icon: "el-icon-s-management",
     path: "/stock",
     name: "库存",
-    component: () => import("@/views/Stock"),
+    component: () => import("@/views/stock/Stock"),
     children: [
       {
         path: "quantity",
         name: "查询",
-        component: () => import("@/components/stock/Quantity"),
+        component: () => import("@/views/stock/child/Quantity"),
         show: true
       },
       {
         path: "purchase",
         name: "采购",
-        component: () => import("@/components/stock/Purchase"),
+        component: () => import("@/views/stock/child/Purchase"),
         show: true
       },
       {
         path: "sell",
         name: "出售",
-        component: () => import("@/components/stock/Sell"),
+        component: () => import("@/views/stock/child/Sell"),
         show: true
       },
       {
         path: "detail",
         name: "详情页",
-        component: () => import("@/components/stock/detail/Index")
+        component: () => import("@/views/stock/child/detail/Index")
       },
       {
         path: "model",
         name: "模型",
         show: true,
-        component: () => import("@/components/stock/Model")
+        component: () => import("@/views/stock/child/Model")
       }
     ]
   },
@@ -54,19 +54,19 @@ const routes = [
     icon: "el-icon-s-custom",
     path: "/customer",
     name: "客户",
-    component: () => import("@/views/Customer"),
+    component: () => import("@/views/customer/Customer"),
     children: [
       {
         path: "importer",
         name: "进货商",
         show: true,
-        component: () => import("@/components/customer/Importer")
+        component: () => import("@/views/customer/child/Importer")
       },
       {
         path: "exporter",
         name: "出货商",
         show: true,
-        component: () => import("@/components/customer/Exporter")
+        component: () => import("@/views/customer/child/Exporter")
       }
     ]
   },

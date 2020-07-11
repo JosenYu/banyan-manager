@@ -4,13 +4,12 @@
     <!-- <div id="main"></div> -->
     <input type="file" name="file" id="file" @change="handleFileChange" />
     <button @click="handleUpload">Upload</button>
+    <p>
+      https://service.dcloud.net.cn/build/download/12c622f0-b7e1-11ea-aaec-77a7009d34d9
+    </p>
   </div>
 </template>
-<style lang="stylus" scoped>
-#main
-  width 100%
-  height 400px
-</style>
+<style lang="stylus" scoped></style>
 <script>
 // @ is an alias to /src
 import { aaa, aaa2 } from "@/api/upload";
@@ -71,6 +70,7 @@ export default {
       });
     }
   },
+  watch: {},
   mounted() {}
 };
 </script>

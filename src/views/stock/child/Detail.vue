@@ -156,8 +156,10 @@ export default {
     },
     openUpdateSell() {},
     searchOne() {
+      // debugger;
       stock.searchOne(this.$route.params.row._id).then(result => {
-        result.data;
+        // result.data;
+        // debugger;
         this.detail = result.data.oneStock;
         this.sellTableList = result.data.sell.map(v => ({
           sellNumber: v.sell.sellNumber,
